@@ -19,6 +19,7 @@ namespace Hyobin
 
         #region PRIVATE FIELDS
         PlayerControls inputActions;
+        CameraManager cameraManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -42,6 +43,22 @@ namespace Hyobin
         private void OnDisable()
         {
             inputActions.Disable();
+        }
+
+        private void Awake()
+        {
+            cameraManager = CameraManager.instance;
+        }
+
+        private void FixedUpdate()
+        {
+            float delta = Time.deltaTime;
+
+            if(cameraManager != null)
+            {
+                cameraManager.FollowTarget(delta);
+                cameraManager.HandleCameraRotation(delta, cameraHorizontal, cameraVertical);
+            }
         }
         #endregion
 
